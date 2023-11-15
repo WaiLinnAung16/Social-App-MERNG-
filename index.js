@@ -4,17 +4,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config({ path: "../SocialApp/.env.local" });
 
-const typeDefs = `
-    type Query{
-        sayHi: String!
-    }
-`;
-
-const resolvers = {
-  Query: {
-    sayHi: () => "Hello World!",
-  },
-};
+import typeDefs from "./graphql/typeDefs.js";
+import resolvers from "./graphql/resolvers/resolvers.js";
 
 const server = new ApolloServer({
   typeDefs,
@@ -29,4 +20,3 @@ const { url } = await startStandaloneServer(server, {
 });
 
 console.log(`🚀  Server ready at: ${url}`);
-
