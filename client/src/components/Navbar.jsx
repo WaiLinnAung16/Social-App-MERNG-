@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Separator } from "./ui/separator";
-import { ModeToggle } from "./ModeToggle";
+import { Separator } from "../components/ui/separator";
 
 const Navbar = () => {
   return (
@@ -12,11 +11,11 @@ const Navbar = () => {
         <NavLink to={"/login"} className="navbar">
           Login
         </NavLink>
-        <Separator className="border-1 h-5"/>
+        <Separator orientation='vertical' className="border-1 h-5"/>
         <NavLink to={"/register"} className="navbar">
           Register
         </NavLink>
-        <ModeToggle/>
+        {/* <ModeToggle/> */}
       </div>
     </nav>
   );

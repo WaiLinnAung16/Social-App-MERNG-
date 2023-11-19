@@ -1,15 +1,21 @@
-import Navbar from "./components/Navbar";
-import { ThemeProvider } from "./components/Theme-provider";
+import React from "react";
 import Path from "./routes/Path";
+import Navbar from "./components/Navbar";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000",
+  cache: new InMemoryCache(),
+});
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="max-w-[1300px] mx-auto flex flex-col gap-5 my-5 px-5">
+    <ApolloProvider client={client}>
+      <div className="max-w-[1300px] mx-auto px-5 my-5">
         <Navbar />
         <Path />
       </div>
-    </ThemeProvider>
+    </ApolloProvider>
   );
 };
 

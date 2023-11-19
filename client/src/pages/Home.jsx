@@ -1,8 +1,8 @@
+import { gql, useQuery } from "@apollo/client";
+import React from "react";
 
-import { useQuery } from "@apollo/client";
-
-const GET_POSTS = gql(/* GraphQL */ `
-  query GetPosts {
+const GET_POSTS = gql`
+  {
     getPosts {
       id
       username
@@ -14,18 +14,13 @@ const GET_POSTS = gql(/* GraphQL */ `
         body
         createdAt
       }
-      likes {
-        id
-        username
-        createdAt
-      }
     }
   }
-`);
+`;
 
 const Home = () => {
   const { data } = useQuery(GET_POSTS);
-    console.log(data);
+  console.log(data);
   return <div>Home</div>;
 };
 

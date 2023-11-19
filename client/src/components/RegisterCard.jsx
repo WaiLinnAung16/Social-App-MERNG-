@@ -1,3 +1,4 @@
+import { Button } from "../components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,9 +6,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+} from "../components/ui/card";
+
+import { Input } from "../components/ui/input";
+
 import { Link } from "react-router-dom";
 const RegisterCard = () => {
   return (
@@ -62,7 +64,10 @@ const RegisterCard = () => {
         <Button className="w-full">Register</Button>
         <p className="text-sm">
           Already have an account?{" "}
-          <Link to={'/login'} className=" cursor-pointer underline text-slate-900 hover:text-slate-500 dark:text-slate-100 dark:hover:text-slate-300">
+          <Link
+            to={"/login"}
+            className=" cursor-pointer underline text-slate-900 hover:text-slate-500 dark:text-slate-100 dark:hover:text-slate-300"
+          >
             Login now
           </Link>
         </p>
