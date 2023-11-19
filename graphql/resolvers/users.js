@@ -7,7 +7,7 @@ import {
   validateLoginInput,
   validateRegisterInput,
 } from "../../utils/validators.js";
-dotenv.config({ path: "../../.env.local" });
+dotenv.config({ path: "../../.env" });
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -104,7 +104,7 @@ const userResolver = {
       const res = await newUser.save();
 
       const token = generateToken(res);
-
+      console.log(res)
       return {
         ...res._doc,
         id: res._id,
