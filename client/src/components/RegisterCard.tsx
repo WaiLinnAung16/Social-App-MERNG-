@@ -9,14 +9,24 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
-const LoginCard = () => {
+const RegisterCard = () => {
   return (
     <Card className="max-w-[500px] mx-auto">
       <CardHeader>
-        <CardTitle>Welcome Back👋</CardTitle>
-        <CardDescription>Please fill your correct information</CardDescription>
+        <CardTitle>Register 📝</CardTitle>
+        <CardDescription>Enter your information to register</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
+        {/* Email */}
+        <div>
+          <label htmlFor="username">Name</label>
+          <Input
+            name="username"
+            id="username"
+            type="text"
+            placeholder="Jhon Doe"
+          />
+        </div>
         {/* Email */}
         <div>
           <label htmlFor="email">Email</label>
@@ -37,13 +47,23 @@ const LoginCard = () => {
             placeholder="*******"
           />
         </div>
+        {/* Password */}
+        <div>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <Input
+            name="confirmPassword"
+            id="confirmPassword"
+            type="password"
+            placeholder="*******"
+          />
+        </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-3">
-        <Button className="w-full">Login</Button>
+        <Button className="w-full">Register</Button>
         <p className="text-sm">
-          Don't you have an account?{" "}
-          <Link to={'/register'} className=" cursor-pointer underline text-slate-900 hover:text-slate-500 dark:text-slate-100 dark:hover:text-slate-300">
-            Register now
+          Already have an account?{" "}
+          <Link to={'/login'} className=" cursor-pointer underline text-slate-900 hover:text-slate-500 dark:text-slate-100 dark:hover:text-slate-300">
+            Login now
           </Link>
         </p>
       </CardFooter>
@@ -51,4 +71,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard;
+export default RegisterCard;

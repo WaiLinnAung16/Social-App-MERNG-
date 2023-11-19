@@ -1,5 +1,7 @@
+import RegisterCard from "@/components/RegisterCard";
+
 const Register = () => {
-  return <div>Register</div>;
+  return <div className="py-10"><RegisterCard/></div>;
 };
 
 export default Register;
