@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Separator } from "../components/ui/separator";
+import { ModeToggle } from "./ModeToggle";
 
 const Navbar = () => {
   return (
