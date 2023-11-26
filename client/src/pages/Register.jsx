@@ -1,10 +1,11 @@
 import RegisterCard from "../components/RegisterCard";
+import AuthLayout from "../components/AuthLayout";
 
 const Register = () => {
   return (
-    <div className="py-10">
+    <AuthLayout>
       <RegisterCard />
-    </div>
+    </AuthLayout>
   );
 };
 

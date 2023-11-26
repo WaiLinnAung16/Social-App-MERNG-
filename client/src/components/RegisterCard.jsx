@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -17,7 +17,10 @@ import { REGISTER } from "../quries";
 import { useToast } from "./ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { useForm } from "../Hooks/useForm";
+import { AuthContext } from "../context/auth";
 const RegisterCard = () => {
+  const context = useContext(AuthContext)
+
   const nav = useNavigate();
   const { toast } = useToast();
   const [errors, setErrors] = useState();
@@ -30,8 +33,9 @@ const RegisterCard = () => {
   });
 
   const [register, {  loading }] = useMutation(REGISTER, {
-    update(cache, result) {
-      console.log(result);
+    update(cache, {data:{register:userData}}) {
+      console.log(cache);
+      context.login(userData)
       nav("/");
     },
     onError(err) {

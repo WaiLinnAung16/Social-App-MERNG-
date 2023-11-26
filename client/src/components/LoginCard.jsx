@@ -12,10 +12,14 @@ import {
 import { Input } from "../components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { LOGIN } from "../quries";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { AuthContext } from "../context/auth";
+import { toast } from "./ui/use-toast";
 
 const LoginCard = () => {
+  const context = useContext(AuthContext);
+
   const nav = useNavigate();
   const [errors, setErrors] = useState();
 
@@ -24,12 +28,21 @@ const LoginCard = () => {
     password: "",
   });
   const [login, { loading }] = useMutation(LOGIN, {
-    update(cache, result) {
-      console.log(result);
+    update(cache, { data: { login: userData } }) {
+      console.log(userData);
+      context.login(userData);
       nav("/");
     },
     onError(err) {
-      setErrors(err?.graphQLErrors[0]?.extensions?.code);
+      const error = err?.graphQLErrors[0]?.extensions?.code;
+      if (error.general) {
+        toast({
+          variant: "destructive",
+          description: error.general,
+        });
+      }
+      console.log(err?.graphQLErrors[0]?.extensions?.code);
+      setErrors(error);
     },
     variables: {
       username: formData.username,

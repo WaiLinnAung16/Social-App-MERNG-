@@ -1,10 +1,11 @@
 import LoginCard from "../components/LoginCard";
+import AuthLayout from "../components/AuthLayout";
 
 const Login = () => {
   return (
-    <div className="py-10">
+    <AuthLayout>
       <LoginCard />
-    </div>
+    </AuthLayout>
   );
 };
 

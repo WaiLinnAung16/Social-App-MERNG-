@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "./components/ui/toaster";
+import { AuthProvider } from "./context/auth";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
@@ -13,12 +14,14 @@ const client = new ApolloClient({
 const App = () => {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div className="max-w-[1300px] mx-auto px-5 my-5">
-          <Navbar />
-          <Path />
-          <Toaster />
-        </div>
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <AuthProvider>
+          <div className="max-w-[1300px] mx-auto px-5 my-5">
+            <Navbar />
+            <Path />
+            <Toaster />
+          </div>
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   );
