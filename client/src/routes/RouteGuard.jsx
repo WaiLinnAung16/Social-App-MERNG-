@@ -10,7 +10,7 @@ const RouteGuard = ({ children }) => {
   } else {
     toast({
       variant: "destructive",
-      description: "You need to Login first or Register new account",
+      description: "You need to Login first!",
     });
     return <Navigate to={"/login"} />;
   }

@@ -24,6 +24,69 @@ const GET_POSTS = gql`
   }
 `;
 
+const GET_POST = gql`
+  query ($postId: ID!) {
+    getPost(postId: $postId) {
+      id
+      username
+      body
+      createdAt
+      comments {
+        id
+        username
+        body
+        createdAt
+      }
+      likeCount
+      commentCount
+    }
+  }
+`;
+
+const CREATE_POST = gql`
+  mutation ($body: String!) {
+    createPost(body: $body) {
+      id
+      username
+      body
+      createdAt
+      likes {
+        id
+        username
+        createdAt
+      }
+      comments {
+        id
+        username
+        body
+        createdAt
+      }
+      likeCount
+      commentCount
+    }
+  }
+`;
+
+const LIKE_POST = gql`
+  mutation ($postId: ID!) {
+    likePost(postId: $postId) {
+      id
+      username
+      likeCount
+      likes {
+        username
+        id
+      }
+    }
+  }
+`;
+
+const DELETE_POST = gql`
+  mutation ($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
+
 const REGISTER = gql`
   mutation (
     $username: String!
@@ -49,8 +112,8 @@ const REGISTER = gql`
 `;
 
 const LOGIN = gql`
-  mutation($username:String!,$password:String!){
-    login(username:$username,password:$password){
+  mutation ($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
       id
       username
       email
@@ -58,6 +121,14 @@ const LOGIN = gql`
       createdAt
     }
   }
-`
+`;
 
-export { GET_POSTS,REGISTER,LOGIN };
+export {
+  GET_POSTS,
+  GET_POST,
+  CREATE_POST,
+  LIKE_POST,
+  DELETE_POST,
+  REGISTER,
+  LOGIN,
+};

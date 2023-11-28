@@ -1,13 +1,32 @@
 import React from "react";
 import Path from "./routes/Path";
 import Navbar from "./components/Navbar";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { ThemeProvider } from "./components/Theme-provider";
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from "./context/auth";
 
-const client = new ApolloClient({
+const httpLink = new HttpLink({
   uri: "http://localhost:4000",
+});
+
+const authLink = setContext(() => {
+  const token = localStorage.getItem("jwtToken");
+  return {
+    headers: {
+      authorization: token ? `${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
