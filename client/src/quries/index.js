@@ -67,6 +67,21 @@ const CREATE_POST = gql`
   }
 `;
 
+const CREATE_COMMENT = gql`
+  mutation ($postId: ID!, $body: String!) {
+    createComment(postId: $postId, body: $body) {
+      id
+      comments {
+        id
+        username
+        body
+        createdAt
+      }
+      commentCount
+    }
+  }
+`;
+
 const LIKE_POST = gql`
   mutation ($postId: ID!) {
     likePost(postId: $postId) {
@@ -84,6 +99,21 @@ const LIKE_POST = gql`
 const DELETE_POST = gql`
   mutation ($postId: ID!) {
     deletePost(postId: $postId)
+  }
+`;
+
+const DELETE_COMMENT = gql`
+  mutation ($postId: ID!, $commentId: ID!) {
+    deleteComment(postId: $postId, commentId: $commentId) {
+      id
+      comments {
+        id
+        username
+        body
+        createdAt
+      }
+      commentCount
+    }
   }
 `;
 
@@ -127,8 +157,10 @@ export {
   GET_POSTS,
   GET_POST,
   CREATE_POST,
+  CREATE_COMMENT,
   LIKE_POST,
   DELETE_POST,
+  DELETE_COMMENT,
   REGISTER,
   LOGIN,
 };

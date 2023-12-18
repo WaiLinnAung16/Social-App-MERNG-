@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LIKE_POST } from "../quries";
 import { toast } from "./ui/use-toast";
+import { AuthContext } from "../context/auth";
+import { ToastAction } from "./ui/toast";
 
 const LikeButton = ({ post: { id, likes, likeCount }, user }) => {
   const [liked, setLiked] = useState(false);
+  const {logout} = useContext(AuthContext);
 
   const [likePost] = useMutation(LIKE_POST, {
     variables: { postId: id },
@@ -14,8 +17,10 @@ const LikeButton = ({ post: { id, likes, likeCount }, user }) => {
       console.log(error.message);
       toast({
         variant: "destructive",
-        description: "Your personal token is expired!",
+        description: "Your session has expired. Please log in again.",
+        action: <ToastAction altText="Login" onClick={()=>logout()}>Login</ToastAction>,
       });
+      
     },
   });
   const nav = useNavigate();
@@ -28,10 +33,20 @@ const LikeButton = ({ post: { id, likes, likeCount }, user }) => {
 
   const likeButton = user ? (
     liked ? (
-      <Button onClick={likePost}>{likeCount} Like</Button>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          likePost()
+        }}
+      >
+        {likeCount} Like
+      </Button>
     ) : (
       <Button
-        onClick={likePost}
+        onClick={(e) => {
+          e.stopPropagation();
+          likePost()
+        }}
         className={buttonVariants({ variant: "outline" })}
       >
         {likeCount} Like

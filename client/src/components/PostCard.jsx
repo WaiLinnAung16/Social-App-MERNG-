@@ -30,8 +30,12 @@ const PostCard = ({
   const nav = useNavigate();
   const { user } = useContext(AuthContext);
   return (
-    <motion.div layout className="col-span-12 md:col-span-6 lg:col-span-4">
-      <Card>
+    <motion.div
+      layout
+      onClick={() => nav(`/posts/${id}`)}
+      className="col-span-12 md:col-span-6 lg:col-span-4 cursor-pointer"
+    >
+      <Card className="transition-shadow hover:shadow-md">
         <CardHeader>
           <CardTitle>{username}</CardTitle>
           <CardDescription>{moment(createdAt).fromNow()}</CardDescription>
@@ -40,13 +44,16 @@ const PostCard = ({
           <p>{body}</p>
         </CardContent>
         <CardFooter className="flex  gap-3 w-full">
-          <LikeButton post={{id,likeCount,likes}} user={user}/>
-          <Button onClick={() => nav(`/posts/${id}`)}>
+          <LikeButton post={{ id, likeCount, likes }} user={user} />
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              nav(`/posts/${id}`);
+            }}
+          >
             {commentCount} Comment
           </Button>
-          {user && user.username === username && (
-            <DeleteButton post={id}/>
-          )}
+          {user && user.username === username && <DeleteButton postId={id} />}
         </CardFooter>
       </Card>
     </motion.div>

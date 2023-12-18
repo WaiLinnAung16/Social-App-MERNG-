@@ -2,7 +2,7 @@ import React from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { LucideTrash2 } from "lucide-react";
 import { useMutation } from "@apollo/client";
-import { DELETE_POST, GET_POSTS } from "../quries";
+import { DELETE_COMMENT, DELETE_POST, GET_POSTS } from "../quries";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,10 +15,12 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
-const DeleteButton = ({ post: id }) => {
-  const [deletePost] = useMutation(DELETE_POST, {
+const DeleteButton = ({ postId, commentId }) => {
+  const mutation = commentId ? DELETE_COMMENT : DELETE_POST;
+  const [deletePostOrComment] = useMutation(mutation, {
     variables: {
-      postId: id,
+      postId: postId,
+      commentId: commentId,
     },
     refetchQueries: [GET_POSTS],
   });
@@ -26,6 +28,9 @@ const DeleteButton = ({ post: id }) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
           className={`${buttonVariants({ variant: "destructive" })} ml-auto`}
         >
           <LucideTrash2 className="h-4" />
@@ -37,14 +42,23 @@ const DeleteButton = ({ post: id }) => {
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            post.
+            {commentId ? "comment" : "post"}.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button
-              onClick={deletePost}
+              onClick={(e) => {
+                e.stopPropagation();
+                deletePostOrComment()
+              }}
               className={buttonVariants({ variant: "destructive" })}
             >
               Delete
